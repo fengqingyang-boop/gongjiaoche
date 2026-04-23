@@ -861,7 +861,7 @@
                     if (!this.nextStation) return 0;
                     const busWorldX = this.worldOffset + this.busX;
                     const distance = Math.max(0, this.nextStation.x - busWorldX);
-                    return Math.round(distance / 10);
+                    return Math.round(distance / 5);
                 },
                 showParkHint() {
                     if (!this.nextStation) return false;
@@ -949,9 +949,9 @@
                             
                             setTimeout(() => {
                                 if (this.nextStation && this.isAtStation) {
-                                    this.passengers++;
+                                    this.passengers += 3;
                                     this.nextStation.boarded = true;
-                                    this.showMessage('👤 乘客上车！共 ' + this.passengers + ' 位', 'success');
+                                    this.showMessage('👤 3位乘客上车！共 ' + this.passengers + ' 位', 'success');
                                     
                                     setTimeout(() => {
                                         this.doorOpen = false;
@@ -1056,7 +1056,7 @@
                         }
                         
                         if (this.speed > 0 && !this.isAtStation) {
-                            const moveSpeed = this.speed * 0.8;
+                            const moveSpeed = this.speed * 1.4;
                             this.worldOffset += moveSpeed * 0.05;
                         }
                         
