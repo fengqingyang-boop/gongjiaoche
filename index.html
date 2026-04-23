@@ -84,41 +84,111 @@
             overflow: hidden;
         }
 
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(180deg, #87CEEB 0%, #B8E4F9 100%);
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.9;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .cloud-1 {
+            width: 80px;
+            height: 30px;
+            top: 40px;
+        }
+
+        .cloud-1::before {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            left: 10px;
+        }
+
+        .cloud-1::after {
+            width: 35px;
+            height: 35px;
+            top: -15px;
+            left: 35px;
+        }
+
+        .cloud-2 {
+            width: 100px;
+            height: 40px;
+            top: 80px;
+        }
+
+        .cloud-2::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 15px;
+        }
+
+        .cloud-2::after {
+            width: 45px;
+            height: 45px;
+            top: -20px;
+            left: 45px;
+        }
+
+        .ground {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
+        }
+
         .road {
             position: absolute;
             bottom: 0;
-            width: 100%;
+            left: 0;
+            width: 10000px;
             height: 200px;
-            background: #2C3E50;
+            background: linear-gradient(180deg, #5D6D7E 0%, #34495E 100%);
+            transition: transform 0.05s linear;
         }
 
         .road-marks {
             position: absolute;
             bottom: 100px;
-            width: 100%;
-            height: 4px;
+            left: 0;
+            width: 10000px;
+            height: 6px;
             background: repeating-linear-gradient(
                 90deg,
                 #FFD700 0px,
-                #FFD700 40px,
-                transparent 40px,
-                transparent 80px
+                #FFD700 50px,
+                transparent 50px,
+                transparent 100px
             );
-            animation: roadMove 0.5s linear infinite;
-        }
-
-        @keyframes roadMove {
-            from { transform: translateX(0); }
-            to { transform: translateX(-80px); }
         }
 
         .bus {
             position: absolute;
             bottom: 120px;
-            left: 100px;
+            left: 80px;
             width: 200px;
             height: 120px;
-            transition: transform 0.1s ease;
+            z-index: 10;
         }
 
         .bus-body {
@@ -126,25 +196,25 @@
             width: 100%;
             height: 90px;
             background: linear-gradient(180deg, #E74C3C 0%, #C0392B 100%);
-            border-radius: 10px;
+            border-radius: 10px 10px 5px 5px;
             top: 0;
         }
 
         .bus-roof {
             position: absolute;
-            width: 80%;
-            height: 15px;
+            width: 85%;
+            height: 12px;
             background: #C0392B;
             border-radius: 5px 5px 0 0;
             top: -10px;
-            left: 10%;
+            left: 7.5%;
         }
 
         .bus-windows {
             position: absolute;
             top: 15px;
             left: 10px;
-            width: calc(100% - 20px);
+            width: calc(100% - 60px);
             height: 40px;
             display: flex;
             justify-content: space-around;
@@ -152,7 +222,7 @@
         }
 
         .bus-window {
-            width: 30px;
+            width: 28px;
             height: 35px;
             background: linear-gradient(180deg, #87CEEB 0%, #5DADE2 100%);
             border: 2px solid #34495E;
@@ -161,18 +231,19 @@
 
         .bus-door {
             position: absolute;
-            right: 30px;
+            right: 5px;
             top: 15px;
-            width: 40px;
+            width: 45px;
             height: 70px;
             background: #922B21;
             border: 3px solid #641E16;
             border-radius: 5px;
             transition: transform 0.3s ease;
+            z-index: 2;
         }
 
         .bus-door.open {
-            transform: translateX(-20px) scaleX(0.3);
+            transform: translateX(-25px) scaleX(0.2);
         }
 
         .bus-door::before {
@@ -193,7 +264,7 @@
             width: 100%;
             display: flex;
             justify-content: space-around;
-            padding: 0 30px;
+            padding: 0 25px;
         }
 
         .bus-wheel {
@@ -202,11 +273,10 @@
             background: linear-gradient(180deg, #34495E 0%, #2C3E50 100%);
             border-radius: 50%;
             position: relative;
-            animation: wheelSpin 0.3s linear infinite;
         }
 
-        .bus-wheel.stopped {
-            animation: none;
+        .bus-wheel.spinning {
+            animation: wheelSpin 0.2s linear infinite;
         }
 
         @keyframes wheelSpin {
@@ -226,21 +296,20 @@
             border-radius: 50%;
         }
 
-        .stations {
+        .stations-container {
             position: absolute;
             bottom: 200px;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            padding: 0 50px;
+            left: 0;
+            width: 10000px;
+            height: 100px;
         }
 
         .station {
-            width: 80px;
+            position: absolute;
+            width: 90px;
             height: 100px;
             background: linear-gradient(180deg, #ECF0F1 0%, #BDC3C7 100%);
             border-radius: 10px 10px 0 0;
-            position: relative;
             border: 3px solid #95A5A6;
             display: flex;
             flex-direction: column;
@@ -249,18 +318,28 @@
             transition: all 0.3s ease;
         }
 
+        .station.approaching {
+            border-color: #F39C12;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.5);
+            animation: stationApproach 0.5s ease-in-out infinite;
+        }
+
+        @keyframes stationApproach {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         .station.current {
-            border-color: #FFD700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            transform: scale(1.1);
+            border-color: #27AE60;
+            box-shadow: 0 0 20px rgba(39, 174, 96, 0.6);
         }
 
         .station.passed {
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .station-number {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             color: #2C3E50;
             margin-bottom: 5px;
@@ -274,25 +353,25 @@
         .station::before {
             content: '';
             position: absolute;
-            top: -20px;
+            top: -22px;
             width: 6px;
-            height: 20px;
+            height: 22px;
             background: #95A5A6;
         }
 
-        .passengers {
+        .passengers-container {
             position: absolute;
             bottom: 220px;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            padding: 0 70px;
+            left: 0;
+            width: 10000px;
+            height: 40px;
             pointer-events: none;
         }
 
         .passenger-group {
+            position: absolute;
             display: flex;
-            gap: 5px;
+            gap: 8px;
         }
 
         .passenger {
@@ -301,12 +380,20 @@
             background: linear-gradient(180deg, #3498DB 0%, #2980B9 100%);
             border-radius: 10px 10px 5px 5px;
             position: relative;
-            animation: passengerWait 1s ease-in-out infinite;
+            animation: passengerWait 1.2s ease-in-out infinite;
+        }
+
+        .passenger:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .passenger:nth-child(3) {
+            animation-delay: 0.4s;
         }
 
         @keyframes passengerWait {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+            50% { transform: translateY(-4px); }
         }
 
         .passenger::before {
@@ -315,10 +402,28 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 15px;
-            height: 15px;
+            width: 14px;
+            height: 14px;
             background: #F39C12;
             border-radius: 50%;
+        }
+
+        .distance-indicator {
+            position: absolute;
+            top: 80px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 20;
+        }
+
+        .distance-indicator .distance-value {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 18px;
         }
 
         .controls {
@@ -334,9 +439,9 @@
 
         .speed-bar-container {
             width: 100%;
-            height: 30px;
+            height: 35px;
             background: #DEE2E6;
-            border-radius: 15px;
+            border-radius: 18px;
             overflow: hidden;
             position: relative;
             border: 2px solid #CED4DA;
@@ -345,8 +450,8 @@
         .speed-bar {
             height: 100%;
             background: linear-gradient(90deg, #27AE60 0%, #F1C40F 50%, #E74C3C 100%);
-            transition: width 0.1s ease;
-            border-radius: 15px;
+            transition: width 0.05s ease;
+            border-radius: 18px;
         }
 
         .speed-label {
@@ -357,31 +462,32 @@
             font-weight: bold;
             color: #2C3E50;
             text-shadow: 0 0 3px white;
+            font-size: 16px;
         }
 
         .key-hints {
             display: flex;
             justify-content: center;
-            gap: 60px;
+            gap: 80px;
             margin-top: 15px;
         }
 
         .key-hint {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .key {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
             border: 3px solid #DEE2E6;
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #2C3E50;
             box-shadow: 0 4px 0 #DEE2E6;
@@ -391,11 +497,13 @@
         .key.pressed {
             transform: translateY(4px);
             box-shadow: 0 0 0 #DEE2E6;
+            background: linear-gradient(180deg, #E8F4FD 0%, #D4E9F9 100%);
         }
 
         .key-text {
             font-size: 14px;
             color: #6C757D;
+            line-height: 1.5;
         }
 
         .message {
@@ -403,14 +511,15 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             color: white;
-            padding: 20px 40px;
+            padding: 25px 50px;
             border-radius: 15px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             animation: messagePopup 2s ease-out forwards;
             z-index: 100;
+            text-align: center;
         }
 
         @keyframes messagePopup {
@@ -422,22 +531,27 @@
         }
 
         .warning {
-            background: rgba(231, 76, 60, 0.9) !important;
+            background: rgba(231, 76, 60, 0.95) !important;
         }
 
         .success {
-            background: rgba(39, 174, 96, 0.9) !important;
+            background: rgba(39, 174, 96, 0.95) !important;
+        }
+
+        .info {
+            background: rgba(52, 152, 219, 0.95) !important;
         }
 
         .door-status {
             position: absolute;
-            top: 100px;
-            right: 30px;
+            top: 80px;
+            left: 30px;
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 10px;
             font-size: 16px;
+            z-index: 20;
         }
 
         .door-status.closed {
@@ -460,7 +574,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -468,10 +582,10 @@
         }
 
         .cooldown-text {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: bold;
             color: white;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         }
 
         .game-over {
@@ -480,7 +594,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -491,30 +605,61 @@
         .game-over h2 {
             font-size: 48px;
             color: #FFD700;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .game-over p {
-            font-size: 24px;
+            font-size: 22px;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .restart-btn {
-            margin-top: 30px;
-            padding: 15px 40px;
-            font-size: 20px;
+            margin-top: 40px;
+            padding: 18px 50px;
+            font-size: 22px;
             font-weight: bold;
             color: white;
             background: linear-gradient(180deg, #3498DB 0%, #2980B9 100%);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
         }
 
         .restart-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
+        }
+
+        .hint-text {
+            position: absolute;
+            bottom: 230px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 15;
+            animation: hintBlink 1s ease infinite;
+        }
+
+        @keyframes hintBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .bus-position-marker {
+            position: absolute;
+            bottom: 205px;
+            left: 280px;
+            width: 4px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent 0%, #FFD700 100%);
+            z-index: 5;
         }
     </style>
 </head>
@@ -539,32 +684,50 @@
         </div>
 
         <div class="game-area">
-            <div class="road"></div>
-            <div class="road-marks" :style="{ animationDuration: roadAnimationDuration }"></div>
+            <div class="sky"></div>
+            
+            <div 
+                v-for="cloud in clouds" 
+                :key="cloud.id"
+                class="cloud"
+                :class="'cloud-' + cloud.type"
+                :style="{ left: (cloud.x - worldOffset) + 'px' }"
+            ></div>
 
-            <div class="stations">
+            <div class="ground"></div>
+
+            <div class="road" :style="{ transform: 'translateX(' + (-worldOffset) + 'px)' }">
+                <div class="road-marks"></div>
+            </div>
+
+            <div class="stations-container" :style="{ transform: 'translateX(' + (-worldOffset) + 'px)' }">
                 <div 
-                    v-for="station in 6" 
-                    :key="station"
+                    v-for="station in stations" 
+                    :key="station.id"
                     class="station"
-                    :class="{ 
-                        current: station === currentStation,
-                        passed: station < currentStation
+                    :class="{
+                        approaching: isApproachingStation(station),
+                        current: isCurrentStation(station),
+                        passed: isPassedStation(station)
                     }"
+                    :style="{ left: station.x + 'px' }"
                 >
-                    <div class="station-number">{{ station }}</div>
+                    <div class="station-number">{{ station.id }}</div>
                     <div class="station-sign">站点</div>
                 </div>
             </div>
 
-            <div class="passengers">
+            <div class="passengers-container" :style="{ transform: 'translateX(' + (-worldOffset) + 'px)' }">
                 <div 
-                    v-for="station in 6" 
-                    :key="station"
+                    v-for="station in stations" 
+                    :key="'p-' + station.id"
                     class="passenger-group"
+                    :style="{ left: (station.x + 20) + 'px' }"
                 >
                     <div 
-                        v-if="station >= currentStation && station <= 6"
+                        v-if="!station.boarded"
+                        v-for="n in 3" 
+                        :key="n"
                         class="passenger"
                     ></div>
                 </div>
@@ -582,13 +745,24 @@
                     <div class="bus-door" :class="{ open: doorOpen }"></div>
                 </div>
                 <div class="bus-wheels">
-                    <div class="bus-wheel" :class="{ stopped: speed === 0 }"></div>
-                    <div class="bus-wheel" :class="{ stopped: speed === 0 }"></div>
+                    <div class="bus-wheel" :class="{ spinning: speed > 0 }"></div>
+                    <div class="bus-wheel" :class="{ spinning: speed > 0 }"></div>
                 </div>
             </div>
 
+            <div class="bus-position-marker"></div>
+
             <div class="door-status" :class="{ open: doorOpen, closed: !doorOpen }">
                 车门: {{ doorOpen ? '已打开' : '已关闭' }}
+            </div>
+
+            <div class="distance-indicator" v-if="nextStation">
+                <div style="margin-bottom: 5px;">下一站距离</div>
+                <div class="distance-value">{{ distanceToNextStation }} m</div>
+            </div>
+
+            <div class="hint-text" v-if="showParkHint">
+                请完全停车（速度=0）后按 A 键开门
             </div>
 
             <div v-if="cooldown > 0" class="cooldown-overlay">
@@ -607,12 +781,15 @@
             </div>
             <div class="key-hints">
                 <div class="key-hint">
-                    <div class="key" :class="{ pressed: keyPressed === 'a' }">A</div>
-                    <div class="key-text">减速 / 开关门</div>
+                    <div class="key" :class="{ pressed: keyAPressed }">A</div>
+                    <div class="key-text">
+                        速度>0时：减速<br>
+                        速度=0时：开关门
+                    </div>
                 </div>
                 <div class="key-hint">
-                    <div class="key" :class="{ pressed: keyPressed === 'd' }">D</div>
-                    <div class="key-text">加速</div>
+                    <div class="key" :class="{ pressed: keyDPressed }">D</div>
+                    <div class="key-text">加速（0~100 km/h）</div>
                 </div>
             </div>
         </div>
@@ -620,7 +797,7 @@
         <div v-if="gameOver" class="game-over">
             <h2>🎉 游戏完成！</h2>
             <p>恭喜您完成了所有 6 个站点的运营！</p>
-            <p>最终乘客数: <span style="color: #FFD700; font-weight: bold;">{{ passengers }}</span> 位</p>
+            <p>最终乘客数: <span style="color: #FFD700; font-weight: bold; font-size: 28px;">{{ passengers }}</span> 位</p>
             <button class="restart-btn" @click="restartGame">重新开始</button>
         </div>
     </div>
@@ -632,16 +809,66 @@
             data() {
                 return {
                     speed: 0,
-                    currentStation: 1,
                     passengers: 0,
                     doorOpen: false,
                     cooldown: 0,
                     message: '',
                     messageType: '',
-                    keyPressed: null,
                     gameOver: false,
-                    roadAnimationDuration: '0.5s'
+                    
+                    worldOffset: 0,
+                    busX: 280,
+                    
+                    keyAPressed: false,
+                    keyDPressed: false,
+                    aKeyCooldown: false,
+                    dKeyCooldown: false,
+                    
+                    stations: [
+                        { id: 1, x: 300, boarded: false },
+                        { id: 2, x: 2000, boarded: false },
+                        { id: 3, x: 3700, boarded: false },
+                        { id: 4, x: 5400, boarded: false },
+                        { id: 5, x: 7100, boarded: false },
+                        { id: 6, x: 8800, boarded: false }
+                    ],
+                    
+                    clouds: [
+                        { id: 1, x: 200, type: 1 },
+                        { id: 2, x: 600, type: 2 },
+                        { id: 3, x: 1200, type: 1 },
+                        { id: 4, x: 1800, type: 2 },
+                        { id: 5, x: 2500, type: 1 },
+                        { id: 6, x: 3200, type: 2 },
+                        { id: 7, x: 4000, type: 1 },
+                        { id: 8, x: 4800, type: 2 },
+                        { id: 9, x: 5600, type: 1 },
+                        { id: 10, x: 6500, type: 2 },
+                        { id: 11, x: 7500, type: 1 },
+                        { id: 12, x: 8500, type: 2 }
+                    ],
+                    
+                    currentStation: 1,
+                    isAtStation: false
                 };
+            },
+            computed: {
+                nextStation() {
+                    const unboarded = this.stations.filter(s => !s.boarded);
+                    return unboarded.length > 0 ? unboarded[0] : null;
+                },
+                distanceToNextStation() {
+                    if (!this.nextStation) return 0;
+                    const busWorldX = this.worldOffset + this.busX;
+                    const distance = Math.max(0, this.nextStation.x - busWorldX);
+                    return Math.round(distance / 10);
+                },
+                showParkHint() {
+                    if (!this.nextStation) return false;
+                    const busWorldX = this.worldOffset + this.busX;
+                    const distance = this.nextStation.x - busWorldX;
+                    return distance >= 0 && distance < 200 && this.speed > 0 && !this.isAtStation;
+                }
             },
             mounted() {
                 window.addEventListener('keydown', this.handleKeyDown);
@@ -658,70 +885,96 @@
                     
                     const key = event.key.toLowerCase();
                     
-                    if (key === 'a' || key === 'd') {
-                        this.keyPressed = key;
+                    if (key === 'a' && !this.keyAPressed) {
+                        this.keyAPressed = true;
                     }
                     
-                    if (key === 'd') {
-                        if (this.cooldown > 0) {
-                            this.showMessage('冷却中，无法加速！', 'warning');
-                            return;
-                        }
-                        
-                        if (this.speed > 0 && this.doorOpen) {
-                            this.speed = 0;
-                            this.passengers = Math.max(0, this.passengers - 1);
-                            this.showMessage('⚠️ 未完全停止加速！扣除1位乘客', 'warning');
-                            this.doorOpen = false;
-                            return;
-                        }
-                        
-                        if (this.speed < 100) {
-                            this.speed = Math.min(100, this.speed + 15);
-                        }
-                    }
-                    
-                    if (key === 'a') {
-                        if (this.speed > 0) {
-                            this.speed = Math.max(0, this.speed - 10);
-                        } else if (this.speed === 0) {
-                            this.toggleDoor();
-                        }
+                    if (key === 'd' && !this.keyDPressed) {
+                        this.keyDPressed = true;
                     }
                 },
                 handleKeyUp(event) {
                     const key = event.key.toLowerCase();
-                    if (key === this.keyPressed) {
-                        this.keyPressed = null;
+                    
+                    if (key === 'a') {
+                        this.keyAPressed = false;
+                    }
+                    
+                    if (key === 'd') {
+                        this.keyDPressed = false;
+                    }
+                },
+                processAKey() {
+                    if (this.speed > 0) {
+                        this.speed = Math.max(0, this.speed - 8);
+                    } else if (this.speed === 0 && !this.aKeyCooldown) {
+                        this.aKeyCooldown = true;
+                        this.toggleDoor();
+                        setTimeout(() => {
+                            this.aKeyCooldown = false;
+                        }, 500);
+                    }
+                },
+                processDKey() {
+                    if (this.cooldown > 0) {
+                        if (!this.dKeyCooldown) {
+                            this.dKeyCooldown = true;
+                            this.showMessage('冷却中，无法加速！', 'warning');
+                            setTimeout(() => {
+                                this.dKeyCooldown = false;
+                            }, 1000);
+                        }
+                        return;
+                    }
+                    
+                    if (this.speed > 0 && this.doorOpen) {
+                        this.speed = 0;
+                        this.passengers = Math.max(0, this.passengers - 1);
+                        this.showMessage('⚠️ 未完全停止加速！扣除1位乘客', 'warning');
+                        this.doorOpen = false;
+                        return;
+                    }
+                    
+                    if (this.speed < 100) {
+                        this.speed = Math.min(100, this.speed + 12);
                     }
                 },
                 toggleDoor() {
                     if (this.cooldown > 0) return;
                     
                     if (!this.doorOpen) {
-                        this.doorOpen = true;
-                        this.showMessage('🚪 车门已打开', 'success');
-                        
-                        setTimeout(() => {
-                            if (this.currentStation <= 6) {
-                                this.passengers++;
-                                this.showMessage('👤 乘客上车！共 ' + this.passengers + ' 位', 'success');
-                                
-                                if (this.currentStation < 6) {
+                        if (this.isAtStation) {
+                            this.doorOpen = true;
+                            this.showMessage('🚪 车门已打开', 'info');
+                            
+                            setTimeout(() => {
+                                if (this.nextStation && this.isAtStation) {
+                                    this.passengers++;
+                                    this.nextStation.boarded = true;
+                                    this.showMessage('👤 乘客上车！共 ' + this.passengers + ' 位', 'success');
+                                    
                                     setTimeout(() => {
-                                        this.currentStation++;
-                                        this.startCooldown();
-                                    }, 1000);
-                                } else {
-                                    setTimeout(() => {
-                                        this.gameOver = true;
-                                    }, 1000);
+                                        this.doorOpen = false;
+                                        this.isAtStation = false;
+                                        
+                                        const nextUnboarded = this.stations.find(s => !s.boarded);
+                                        if (nextUnboarded) {
+                                            this.currentStation = nextUnboarded.id;
+                                            this.startCooldown();
+                                        } else {
+                                            setTimeout(() => {
+                                                this.gameOver = true;
+                                            }, 500);
+                                        }
+                                    }, 1500);
                                 }
-                            }
-                        }, 1500);
+                            }, 1500);
+                        } else {
+                            this.showMessage('请先在站点停车！', 'warning');
+                        }
                     } else {
                         this.doorOpen = false;
-                        this.showMessage('🚪 车门已关闭', 'success');
+                        this.showMessage('🚪 车门已关闭', 'info');
                     }
                 },
                 startCooldown() {
@@ -729,6 +982,7 @@
                     this.doorOpen = false;
                 },
                 showMessage(text, type) {
+                    if (this.message) return;
                     this.message = text;
                     this.messageType = type;
                     setTimeout(() => {
@@ -738,29 +992,77 @@
                 },
                 restartGame() {
                     this.speed = 0;
-                    this.currentStation = 1;
                     this.passengers = 0;
                     this.doorOpen = false;
                     this.cooldown = 0;
                     this.message = '';
+                    this.messageType = '';
                     this.gameOver = false;
+                    this.worldOffset = 0;
+                    this.currentStation = 1;
+                    this.isAtStation = false;
+                    this.keyAPressed = false;
+                    this.keyDPressed = false;
+                    this.aKeyCooldown = false;
+                    this.dKeyCooldown = false;
+                    
+                    this.stations.forEach(s => {
+                        s.boarded = false;
+                    });
+                },
+                isApproachingStation(station) {
+                    if (station.boarded) return false;
+                    const busWorldX = this.worldOffset + this.busX;
+                    const distance = station.x - busWorldX;
+                    return distance > 0 && distance < 300;
+                },
+                isCurrentStation(station) {
+                    return this.isAtStation && this.nextStation && station.id === this.nextStation.id;
+                },
+                isPassedStation(station) {
+                    return station.boarded;
+                },
+                checkStationReached() {
+                    if (this.isAtStation || !this.nextStation) return;
+                    
+                    const busWorldX = this.worldOffset + this.busX;
+                    const stationX = this.nextStation.x;
+                    
+                    const distance = Math.abs(busWorldX - stationX);
+                    
+                    if (distance < 50) {
+                        if (this.speed === 0) {
+                            this.isAtStation = true;
+                            this.showMessage('已到达站点 ' + this.nextStation.id + '，按 A 键开门', 'info');
+                        }
+                    }
                 },
                 gameLoop() {
                     setInterval(() => {
+                        if (this.keyAPressed) {
+                            this.processAKey();
+                        }
+                        
+                        if (this.keyDPressed) {
+                            this.processDKey();
+                        }
+                        
                         if (this.cooldown > 0) {
-                            this.cooldown = Math.max(0, this.cooldown - 0.1);
+                            this.cooldown = Math.max(0, this.cooldown - 0.05);
                         }
                         
-                        if (this.speed > 0 && !this.keyPressed) {
-                            this.speed = Math.max(0, this.speed - 0.5);
+                        if (this.speed > 0 && !this.keyDPressed) {
+                            this.speed = Math.max(0, this.speed - 0.3);
                         }
                         
-                        if (this.speed > 0) {
-                            this.roadAnimationDuration = (0.5 / (this.speed / 50 + 0.5)) + 's';
-                        } else {
-                            this.roadAnimationDuration = '0.5s';
+                        if (this.speed > 0 && !this.isAtStation) {
+                            const moveSpeed = this.speed * 0.8;
+                            this.worldOffset += moveSpeed * 0.05;
                         }
-                    }, 100);
+                        
+                        this.checkStationReached();
+                        
+                    }, 50);
                 }
             }
         }).mount('#app');
